@@ -1,3 +1,5 @@
+# backend/simulador/views.py
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -77,3 +79,13 @@ def ranking_empresas(request):
         serializer = RankingSerializer(resultados, many=True)
         return Response(serializer.data)
     return Response([])
+
+
+@api_view(['GET'])
+def resultado_por_empresa_rodada(request, empresa_id, rodada_id):
+    try:
+        resultado = Resultado.objects.get(empresa_id=empresa_id, rodada_id=rodada_id)
+        serializer = ResultadoSerializer(resultado)
+        return Response(serializer.data)
+    except Resultado.DoesNotExist:
+        return Response({'detail': 'Resultado não encontrado'}, status=404)
