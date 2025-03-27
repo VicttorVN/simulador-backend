@@ -16,6 +16,11 @@ from .serializers import (
 from .utils import processar_rodada
 
 
+class RodadaViewSet(viewsets.ModelViewSet):
+    queryset = Rodada.objects.all().order_by('-numero')
+    serializer_class = RodadaSerializer
+
+
 class RodadaAtivaAPIView(APIView):
     def get(self, request):
         rodadas_ativas = Rodada.objects.filter(ativa=True)
@@ -29,7 +34,7 @@ class EmpresaViewSet(viewsets.ModelViewSet):
 
 
 class DecisaoViewSet(viewsets.ModelViewSet):
-    queryset = Decisao.objects.all()
+    queryset = Decisao.objects.all().order_by('-data_envio')
     serializer_class = DecisaoSerializer
 
 

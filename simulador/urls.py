@@ -1,11 +1,11 @@
-# backend/simulador/urls.py
-
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     EmpresaViewSet,
     DecisaoViewSet,
-    ParametroGlobalViewSet,  # NOVO
+    RodadaViewSet,
+    ParametroGlobalViewSet,
+    ResultadoViewSet,
     RodadaAtivaAPIView,
     DecisaoCreateView,
     resultado_empresa,
@@ -15,12 +15,14 @@ from .views import (
 router = DefaultRouter()
 router.register(r'empresas', EmpresaViewSet)
 router.register(r'decisoes', DecisaoViewSet)
-router.register(r'parametros', ParametroGlobalViewSet)  # NOVO
+router.register(r'rodadas', RodadaViewSet)
+router.register(r'parametros', ParametroGlobalViewSet)
+router.register(r'resultados', ResultadoViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),  # /api/empresas, /api/decisoes...
-    path('rodadas/ativas/', RodadaAtivaAPIView.as_view()),
-    path('decisao/create/', DecisaoCreateView.as_view()),
-    path('resultados/<int:empresa_id>/', resultado_empresa),
-    path('ranking/', ranking_empresas),
+    path('api/', include(router.urls)),
+    path('api/rodadas/ativas/', RodadaAtivaAPIView.as_view()),
+    path('api/decisao/create/', DecisaoCreateView.as_view()),
+    path('api/resultados/<int:empresa_id>/', resultado_empresa),
+    path('api/ranking/', ranking_empresas),
 ]

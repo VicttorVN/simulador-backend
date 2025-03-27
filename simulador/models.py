@@ -1,10 +1,9 @@
-# backend/simulador/models.py
-
 from django.db import models
 
 class Rodada(models.Model):
-    numero = models.IntegerField()
+    numero = models.PositiveIntegerField()
     ativa = models.BooleanField(default=False)
+    data_abertura = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Rodada {self.numero}"
@@ -27,6 +26,7 @@ class Decisao(models.Model):
     compra_maquinas = models.IntegerField()
     emprestimo = models.DecimalField(max_digits=10, decimal_places=2)
     antecipacao = models.DecimalField(max_digits=10, decimal_places=2)
+    data_envio = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Decisão - {self.empresa} - Rodada {self.rodada.numero}"
@@ -38,12 +38,11 @@ class Resultado(models.Model):
     despesa = models.DecimalField(max_digits=10, decimal_places=2)
     lucro = models.DecimalField(max_digits=10, decimal_places=2)
     patrimonio = models.DecimalField(max_digits=10, decimal_places=2)
-    custo = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # 🛠️ FIX BUG
+    custo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return f"Resultado - {self.empresa} - Rodada {self.rodada.numero}"
 
-# Novo: parâmetros do mercado
 class ParametroGlobal(models.Model):
     nome = models.CharField(max_length=50, unique=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2)

@@ -1,5 +1,3 @@
-# backend/simulador/serializers.py
-
 from rest_framework import serializers
 from .models import Empresa, Rodada, Decisao, Resultado, ParametroGlobal
 
@@ -28,7 +26,6 @@ class ParametroGlobalSerializer(serializers.ModelSerializer):
         model = ParametroGlobal
         fields = '__all__'
 
-# ✅ Ranking usado pela tela /professor
 class RankingSerializer(serializers.ModelSerializer):
     empresa = serializers.StringRelatedField()
 
